@@ -1,6 +1,7 @@
 # System Modules
 import sys
 import os
+import math
 
 # Installed Modules
 import pytest
@@ -34,6 +35,19 @@ def test_area_of_circle_zero_radius():
     assert result == 0
 
 
+def test_area_of_circle_float_radius():
+    """Test with a non-integer radius."""
+    radius = 2.5
+    result = area_of_circle(radius)
+    assert abs(result - (math.pi * radius ** 2)) < 1e-12
+
+
+def test_area_of_circle_negative_radius_raises():
+    """Negative radius should raise ValueError."""
+    with pytest.raises(ValueError):
+        area_of_circle(-1)
+
+
 def test_get_nth_fibonacci_zero():
     """Test with n=0."""
     # Arrange
@@ -58,13 +72,30 @@ def test_get_nth_fibonacci_one():
     assert result == 1
 
 
-# def test_get_nth_fibonacci_ten():
-#     """Test with n=10."""
-#     # Arrange
-#     n = 10
+def test_get_nth_fibonacci_two_and_three():
+    """Test small n values."""
+    assert get_nth_fibonacci(2) == 1
+    assert get_nth_fibonacci(3) == 2
 
-#     # Act
-#     result = get_nth_fibonacci(n)
 
-#     # Assert
-#     assert result == 89
+def test_get_nth_fibonacci_ten():
+    """Test with n=10."""
+    # Arrange
+    n = 10
+
+    # Act
+    result = get_nth_fibonacci(n)
+
+    # Assert
+    assert result == 55
+
+
+def test_get_nth_fibonacci_seven():
+    """Another Fibonacci check."""
+    assert get_nth_fibonacci(7) == 13
+
+
+def test_get_nth_fibonacci_negative_raises():
+    """Negative n should raise ValueError."""
+    with pytest.raises(ValueError):
+        get_nth_fibonacci(-5)
